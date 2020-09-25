@@ -4,8 +4,8 @@ import 'package:formvalidation/src/bloc/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBloc with Validators {
-  final _emailController =
-      BehaviorSubject<String>(); //StreamController<String>.broadcast();
+  final _emailController = BehaviorSubject<String>();
+  //StreamController<String>.broadcast();
   final _passwordController = BehaviorSubject<String>();
 
   //Recuperar los datos del stream
@@ -26,4 +26,7 @@ class LoginBloc with Validators {
     _emailController?.close();
     _passwordController?.close();
   }
+
+  String get email => _emailController.value;
+  String get password => _passwordController.value;
 }
