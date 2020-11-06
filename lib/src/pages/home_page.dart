@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   final productosProvider = new ProductosProvider();
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of(context);
+    //final bloc = Provider.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +47,17 @@ class HomePage extends StatelessWidget {
         color: Colors.red,
       ),
       child: ListTile(
+        leading: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          width: 50,
+          child: (producto.fotoUrl == null)
+              ? Image(image: AssetImage('assets/no-image.png'))
+              : FadeInImage(
+                  placeholder: AssetImage('assets/jar-loading.gif'),
+                  image: NetworkImage(producto.fotoUrl)),
+        ),
         title: Text('${producto.titulo} - ${producto.valor}'),
         subtitle: Text(producto.id),
         onTap: () =>

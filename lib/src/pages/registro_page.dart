@@ -3,7 +3,7 @@ import 'package:formvalidation/src/bloc/provider.dart';
 import 'package:formvalidation/src/providers/usuario_provider.dart';
 import 'package:formvalidation/src/utils/utils.dart';
 
-class LoginPage extends StatelessWidget {
+class RegistroPage extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
 
   @override
@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Ingreso',
+                  'Crear cuenta',
                   style: TextStyle(fontSize: 20.0, color: Colors.black54),
                 ),
                 SizedBox(
@@ -65,12 +65,10 @@ class LoginPage extends StatelessWidget {
           ),
           FlatButton(
             child: Text(
-              'Crear cuenta',
+              '¿Ya tienes cuenta? Login',
               style: TextStyle(color: Colors.black54),
             ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, 'registro');
-            },
+            onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
           ),
           SizedBox(
             height: 100.0,
@@ -187,12 +185,14 @@ class LoginPage extends StatelessWidget {
               elevation: 0.0,
               color: Colors.deepPurple,
               textColor: Colors.white,
-              onPressed: snapshot.hasData ? () => _login(context, bloc) : null);
+              onPressed:
+                  snapshot.hasData ? () => _register(context, bloc) : null);
         });
   }
 
-  _login(BuildContext context, LoginBloc bloc) async {
-    Map info = await usuarioProvider.login(bloc.email, bloc.password);
+  _register(BuildContext context, LoginBloc bloc) async {
+    final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
+
     if (info['ok']) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {

@@ -31,6 +31,9 @@ dependencies:
   rxdart: ^0.24.1
   http:
   image_picker:
+  fl_chart: ^0.12.0
+  mime_type:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
