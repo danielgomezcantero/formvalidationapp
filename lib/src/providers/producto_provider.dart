@@ -31,6 +31,8 @@ class ProductosProvider {
     final List<ProductoModel> productos = new List();
 
     if (decodedData == null) return [];
+    //Si expira el token
+    if (decodedData['error'] != null) return [];
 
     decodedData.forEach((id, prod) {
       final producTemp = ProductoModel.fromJson(prod);

@@ -4,23 +4,24 @@ import 'package:formvalidation/src/models/producto_model.dart';
 import 'package:formvalidation/src/providers/producto_provider.dart';
 
 class HomePage extends StatelessWidget {
-  final productosProvider = new ProductosProvider();
+  // final productosProvider = new ProductosProvider();
   @override
   Widget build(BuildContext context) {
-    //final bloc = Provider.of(context);
+    final productosBloc = Provider.productosBloc(context);
+    productosBloc.cargarProductos();
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
       ),
-      body: _crearListado(),
+      body: _crearListado(productosBloc),
       floatingActionButton: _crearBoton(context),
     );
   }
 
-  Widget _crearListado() {
-    return FutureBuilder(
-      future: productosProvider.cargarProductos(),
+  Widget _crearListado(ProductoBloc productosBloc) {
+    return StreamBuilder(
+      stream: productosBloc.productoStream,
       builder:
           (BuildContext context, AsyncSnapshot<List<ProductoModel>> snapshot) {
         if (snapshot.hasData) {
@@ -28,7 +29,7 @@ class HomePage extends StatelessWidget {
           return ListView.builder(
             itemCount: productos.length,
             itemBuilder: (BuildContext context, int index) {
-              return _crearItem(context, productos[index]);
+              return _crearItem(context, productos[index], productosBloc);
             },
           );
         } else {
@@ -40,9 +41,13 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _crearItem(BuildContext context, ProductoModel producto) {
+  Widget _crearItem(BuildContext context, ProductoModel producto,
+      ProductoBloc productosBloc) {
     return Dismissible(
       key: UniqueKey(),
+      onDismissed: (direction) {
+        productosBloc.borrarProducto(producto.id);
+      },
       background: Container(
         color: Colors.red,
       ),
@@ -63,7 +68,6 @@ class HomePage extends StatelessWidget {
         onTap: () =>
             Navigator.pushNamed(context, 'producto', arguments: producto),
       ),
-      onDismissed: (direction) => productosProvider.borrarProducto(producto.id),
     );
   }
 
