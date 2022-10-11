@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: 'mensaje',
+        initialRoute: 'login',
         routes: {
           'login': (context) => LoginPage(),
           'registro': (context) => RegistroPage(),
