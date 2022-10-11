@@ -179,7 +179,7 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   _procesarImagen(ImageSource origen) async {
-    final fotoSeleccionada = await ImagePicker().getImage(
+    final fotoSeleccionada = await ImagePicker.pickImage(
       source: origen,
     );
     foto = File(fotoSeleccionada.path);
